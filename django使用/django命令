@@ -1,0 +1,11 @@
+一、文件迁移创建数据库表
+    python manage.py makemigrations
+    python manage.py migrate
+
+二、创建管理员账号和密码
+    python manage.py createsuperuser
+
+三、启动服务器：
+    python manage.py runserver # 默认ip和端口
+    python manage.py runserver 8080 # 默认ip指定端口
+    python manage.py runserver 127.0.0.1:8080 # 指定ip指定端口

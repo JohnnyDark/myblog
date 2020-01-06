@@ -1,0 +1,70 @@
+一、django static文件的引入方式：
+    1 在django project中创建static文件夹
+    2 setting.py 中配置要在  STATIC_URL = '/static/'下边
+        STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+    3 前段引入：
+        页面顶部：
+            {% load staticfiles %}
+            {% static 'xxx.css' %}
+            {% static 'xxx.js' %}
+
+二、模板包含，继承与 {% block %}的用法：
+    1 设置TEMPLATES里面的DIRS，添加模目录template的路径
+        #修改前
+        'DIRS': []
+        #修改后
+        'DIRS': [os.path.join(BASE_DIR, 'templates')]
+
+    2   Django模板存放方式有两种方法：
+
+        - 在项目根下创建templates目录，然后把模板存入在templates目录里，多个APP的话，
+            就直接在templates目录下建立与APP名相同名称的目录即可。Django会自动查找到，
+            这种方法简单、直观，适合个人或小项目。
+
+        - 各个APP下单独建立一个templates目录，然后再建立一个与项目名相同的的目录，
+            把模板放到对应的目录里。这样的方法适合大项目多人协作，每个人只负责各自的APP项目的时候。
+            多样式多站点(域名)的情况也适用，不同的APP用不同的模板样式，不同的域名
+
+    3 页面包含：include
+        {% include 'xxx.html' %}
+
+        head.html, index.html, footer.html
+
+        合并生成新页面：index.html
+            {% include 'head.html'%}
+            <div>中部</div>
+            {% include 'footer.html'%}
+
+    4 页面继承 extends
+        1 抽取所有页面相同的部分:templates/base.html
+            base.html
+
+                <!DOCTYPE html>
+                <html lang="en">
+                <head>
+                    <meta charset="UTF-8">
+                    <title>MyBlog</title>
+                </head>
+                <body>
+
+                <div>头部</div>
+
+                # 将页面不同的部分定义块来占位
+                {% block content %}
+                {% endblock content %}
+
+                <div>尾部</div>
+
+                </div>
+                </body>
+                </html>
+
+        2 继承使用：templates/index.html
+            使用继承方法的话，这个代码一定要放页面的第一行。
+
+
+            {% extends "base.html" %}
+
+            {% block content %}
+            <div>中部</div>
+            {% endblock content %}
